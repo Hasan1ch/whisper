@@ -62,7 +62,7 @@ const App = () => {
     );
 
   return (
-    <div>
+    <div data-theme="cupcake">
       {/* Navigation bar - appears on all pages */}
       <Navbar />
 
