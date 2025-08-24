@@ -1,48 +1,64 @@
+// Import Link component from react-router-dom for navigation
 import { Link } from "react-router-dom";
+// Import authentication store hook
 import { useAuthStore } from "../store/useAuthStore";
+// Import icons from lucide-react
 import { LogOut, MessageSquare, Settings, User } from "lucide-react";
+// Import ThemeSwitcher component
+import ThemeSwitcher from "./ThemeSwitcher";
 
+// Navbar component definition
 const Navbar = () => {
+  // Get logout function and authenticated user from auth store
   const { logout, authUser } = useAuthStore();
 
   return (
     <header
+      // Navbar styling with fixed position and blur effect
       className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 
     backdrop-blur-lg bg-base-100/80"
     >
       <div className="container mx-auto px-4 h-16">
         <div className="flex items-center justify-between h-full">
+          {/* Left side: Logo / App title */}
           <div className="flex items-center gap-8">
             <Link
               to="/"
               className="flex items-center gap-2.5 hover:opacity-80 transition-all"
             >
+              {/* Logo icon */}
               <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
                 <MessageSquare className="w-5 h-5 text-primary" />
               </div>
+              {/* App name */}
               <h1 className="text-lg font-bold">Whisper</h1>
             </Link>
           </div>
 
+          {/* Right side: ThemeSwitcher, Settings, Profile, Logout */}
           <div className="flex items-center gap-2">
+            {/* Dark/Light mode toggle */}
+            <ThemeSwitcher />
+
+            {/* Settings button */}
             <Link
               to={"/settings"}
-              className={`
-              btn btn-sm gap-2 transition-colors
-              
-              `}
+              className={`btn btn-sm gap-2 transition-colors`}
             >
               <Settings className="w-4 h-4" />
               <span className="hidden sm:inline">Settings</span>
             </Link>
 
+            {/* Conditional rendering: show Profile + Logout only if user is authenticated */}
             {authUser && (
               <>
+                {/* Profile button */}
                 <Link to={"/profile"} className={`btn btn-sm gap-2`}>
                   <User className="size-5" />
                   <span className="hidden sm:inline">Profile</span>
                 </Link>
 
+                {/* Logout button */}
                 <button className="flex gap-2 items-center" onClick={logout}>
                   <LogOut className="size-5" />
                   <span className="hidden sm:inline">Logout</span>
@@ -55,4 +71,6 @@ const Navbar = () => {
     </header>
   );
 };
+
+// Export Navbar component
 export default Navbar;
